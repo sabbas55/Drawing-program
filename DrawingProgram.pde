@@ -12,6 +12,7 @@ import ddf.minim.ugens.*;
 //Global Variables
 Minim minim; //creates object to access all functions 
 AudioPlayer song1; //creates a playlist
+AudioPlayer song2; //creates a playlist
 AudioMetaData SongMetaData1;
 float drawingSurfaceX, drawingSurfaceY, drawingSurfaceWidth, drawingSurfaceHeight, drawingDiameter;
 float buttonX1, buttonY1, buttonWidth1, buttonHeight1;
@@ -60,6 +61,7 @@ size(1500,900);//Landscape
 background(hotpink);
 minim = new Minim(this); //load from data directory, loadFile should also load from project folder, like loadImage *
   song1 = minim.loadFile("C:/Users/Naim/Downloads/beatles.mp3"); //able to pass absolute path, file name & extenstion, and URL *
+  song2 = minim.loadFile("C:/Users/Naim/Downloads/mouseclick.mp3"); //able to pass absolute path, file name & extenstion, and URL *
 //
 //Population
 drawingSurfaceX = width*0;
@@ -265,6 +267,7 @@ void draw() {
   if (draw == true && mouseX>drawingSurfaceX && mouseX<drawingSurfaceX+drawingSurfaceWidth && mouseY>drawingSurfaceY && mouseY<drawingSurfaceY+drawingSurfaceHeight) line (mouseX, mouseY, pmouseX, pmouseY);
 //
 if ( mouseX>quitButtonX && mouseX<quitButtonX+quitButtonWidth && mouseY>quitButtonY && mouseY<quitButtonY+quitButtonHeight ) {
+    song2.rewind(); song2.play();
     buttonFill = green;
   } else {
     buttonFill = black;
@@ -345,24 +348,31 @@ void mousePressed() {
     draw = true;
     // 
   }//end of draw
-  if ( mouseX>thinButtonX1   && mouseX<thinButtonX1+thinButtonWidth1 && mouseY>thinButtonY1 && mouseY<thinButtonY1+thinButtonHeight1) T=1;
- if ( mouseX>thinButtonX2   && mouseX<thinButtonX2+thinButtonWidth2 && mouseY>thinButtonY2 && mouseY<thinButtonY2+thinButtonHeight2) T=5;
- if ( mouseX>thinButtonX3   && mouseX<thinButtonX3+thinButtonWidth3 && mouseY>thinButtonY3 && mouseY<thinButtonY3+thinButtonHeight3) T=20;
+  if ( mouseX>thinButtonX1   && mouseX<thinButtonX1+thinButtonWidth1 && mouseY>thinButtonY1 && mouseY<thinButtonY1+thinButtonHeight1) {song2.rewind(); song2.play(); T=1;}
+ if ( mouseX>thinButtonX2   && mouseX<thinButtonX2+thinButtonWidth2 && mouseY>thinButtonY2 && mouseY<thinButtonY2+thinButtonHeight2) {song2.rewind(); song2.play(); T=5;}
+ if ( mouseX>thinButtonX3   && mouseX<thinButtonX3+thinButtonWidth3 && mouseY>thinButtonY3 && mouseY<thinButtonY3+thinButtonHeight3) {song2.rewind(); song2.play(); T=20;}
  noStroke();
  fill(white);//change to canvas color!
- if (mouseX>clearX && mouseX<clearX+clearWidth && mouseY>clearY && mouseY<clearY+clearHeight ) rect(drawingSurfaceX, drawingSurfaceY, drawingSurfaceWidth, drawingSurfaceHeight);
+ if (mouseX>clearX && mouseX<clearX+clearWidth && mouseY>clearY && mouseY<clearY+clearHeight ) {song2.rewind(); song2.play(); rect(drawingSurfaceX, drawingSurfaceY, drawingSurfaceWidth, drawingSurfaceHeight);}
 //stroke colors
-if (mouseX>redX && mouseX<redX+redWidth && mouseY>redY && mouseY<redY+redHeight) C=red;
-if (mouseX>greenX && mouseX<greenX+greenWidth && mouseY>greenY && mouseY<greenY+greenHeight) C=green;
-if (mouseX>blueX && mouseX<blueX+blueWidth && mouseY>blueY && mouseY<blueY+blueHeight) C=blue;
-if (mouseX>blackX && mouseX<blackX+blackWidth && mouseY>blackY && mouseY<blackY+blackHeight)C=black;
+if (mouseX>redX && mouseX<redX+redWidth && mouseY>redY && mouseY<redY+redHeight) {song2.rewind(); song2.play(); C=red;}
+if (mouseX>greenX && mouseX<greenX+greenWidth && mouseY>greenY && mouseY<greenY+greenHeight) {song2.rewind(); song2.play(); C=green;}
+if (mouseX>blueX && mouseX<blueX+blueWidth && mouseY>blueY && mouseY<blueY+blueHeight) {song2.rewind(); song2.play(); C=blue;}
+if (mouseX>blackX && mouseX<blackX+blackWidth && mouseY>blackY && mouseY<blackY+blackHeight) {song2.rewind(); song2.play(); C=black;}
 //Canvas color
 if (mouseX>canvasX1 && mouseX<canvasX1+canvasWidth1 && mouseY>canvasY1 && mouseY<canvasY1+canvasHeight1) B=white;
 if (mouseX>canvasX2 && mouseX<canvasX2+canvasWidth2 && mouseY>canvasY2 && mouseY<canvasY2+canvasHeight2) B=black;
 //if (mouseX>canvasX1 && mouseX<canvasX1+canvasWidth1 && mouseY>canvasY1 && mouseY<canvasY1+canvasHeight1) background(white);
 //if (mouseX>canvasX2 && mouseX<canvasX2+canvasWidth2 && mouseY>canvasY2 && mouseY<canvasY2+canvasHeight2) background(black);
 //quit button
-if (mouseX>quitButtonX && mouseX<quitButtonX+quitButtonWidth && mouseY>quitButtonY && mouseY<quitButtonY+quitButtonHeight) exit();
+if (mouseX>quitButtonX && mouseX<quitButtonX+quitButtonWidth && mouseY>quitButtonY && mouseY<quitButtonY+quitButtonHeight) {song2.play(); exit();}
+if (mouseX>quitButtonX && mouseX<quitButtonX+quitButtonWidth && mouseY>quitButtonY+700 && mouseY<quitButtonY+700+quitButtonHeight) {
+  if (song1.isPlaying ()) {
+  song1.pause();
+  }else{
+  song1.play();
+}
+}
 //
 
 }
