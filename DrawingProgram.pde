@@ -7,7 +7,12 @@ import ddf.minim.ugens.*;
 
 
 
+
+
 //Global Variables
+Minim minim; //creates object to access all functions 
+AudioPlayer song1; //creates a playlist
+AudioMetaData SongMetaData1;
 float drawingSurfaceX, drawingSurfaceY, drawingSurfaceWidth, drawingSurfaceHeight, drawingDiameter;
 float buttonX1, buttonY1, buttonWidth1, buttonHeight1;
 float buttonX2, buttonY2, buttonWidth2, buttonHeight2;
@@ -53,6 +58,8 @@ void setup() {
 //Display and Canvas checker
 size(1500,900);//Landscape
 background(hotpink);
+minim = new Minim(this); //load from data directory, loadFile should also load from project folder, like loadImage *
+  song1 = minim.loadFile("C:/Users/Naim/Downloads/beatles.mp3"); //able to pass absolute path, file name & extenstion, and URL *
 //
 //Population
 drawingSurfaceX = width*0;
@@ -241,6 +248,9 @@ fill (blue);
 rect (blueX, blueY, blueWidth, blueHeight,15);
 fill (black);
 rect (blackX, blackY, blackWidth, blackHeight,15);
+rect(quitButtonX, quitButtonY+700, quitButtonWidth, quitButtonHeight,25);
+fill (white);
+text("Play/Pause", quitButtonX+115, quitButtonY+750);
 noFill();
 
 //
@@ -271,9 +281,61 @@ text("QUIT", quitTextX, quitTextY);
 
 }
 //
-void keyPressed() {
+void keyPressed() 
+{
+  //First Play Button
+  //if ( key=='p' || key=='P') song1.play(); //Parameter is milli-seconds from start of audio file to start playing //play button
+  //
+  //Alternate Play Button, as a finite loop() && infinite loop()
+  //Only press a number for this code below
+  println(key);
+  if ( key=='1') { //LOOP Function
+    if (key=='1') println("Looping Once");
+    String keystr = String.valueOf(key);
+    println("Number of Repeats is", keystr);
+    int loopNum = int(keystr);
+    song1.loop(loopNum); //Parameter is Parameter is number of repeats
+    //if
+  }//End LOOP Functions
+  if ( key=='i' || key=='I') song1.loop(); //Infinite Loop, no parameter OR -1
+  if (key >= '2' || key=='0' )println ("I do not loop that much, press i for infinite loop");
+  //
+  if (key=='m' || key =='M') {//Mute Button
+    if (song1.isMuted() ) {
+      song1.unmute();
+    } else {
+      song1.mute();
+    }
+  }//End Mute Button
+  //
+  if (key=='f' || key=='F') song1.skip(1000); //skip forward 1 second (1000 miliseconds)
+  if (key=='r' || key=='R') song1.skip(-1000); //skip backwards 1 second (1000 miliseconds);
+  //
+  if (key=='s' || key=='S') {//STOP
+    if (song1.isPlaying ()) {
+      song1.pause();
+      song1.rewind();
+    } else { //Song is not playing
+      song1.rewind();
+    }
+  }//End STOP Button
+  //
+  if (key=='p' || key=='P') {//PAUSE Button
+    if (song1.isPlaying() ) {
+      song1.pause();
+    } else if (song1.position() >= song1.length() - song1.length()*1/5) {
+     song1.rewind();
+      song1.play();
+    } else {
+      song1.play();
+    }
+  }//End PAUSE
 
-}
+  /*int loopNum3 = 2; //Local variable plays once and loops twice
+   if ( key=='l' || key=='L') song1.loop(loopNum3); //Parameter is Parameter is number of repeats// loop button
+   */
+}//End keyPressed
+//
 //
 void mousePressed() {
   if (mouseX>drawingSurfaceX && mouseX<drawingSurfaceX+drawingSurfaceWidth-10 && mouseY>drawingSurfaceY && mouseY<drawingSurfaceY+drawingSurfaceHeight-10) 
