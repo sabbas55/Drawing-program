@@ -1,1 +1,2 @@
-# Drawing-program
+- [x] Create drawing app with thick/thin/diff settings
+- [x] Play a song pause/play/rewind
